@@ -192,6 +192,7 @@ curl http://satria.asia/repo/trial > /usr/bin/trial
 curl http://satria.asia/repo/minggat > /usr/bin/minggat
 curl http://satria.asia/repo/gusur > /usr/bin/gusur
 curl http://satria.asia/repo/menu > /usr/bin/menu
+wget -O /etc/issue.net "https://raw.githubusercontent.com/satriaajiputra/debian7os/master/banner"
 cd /usr/bin
 chmod +x user-add
 chmod +x user-list
