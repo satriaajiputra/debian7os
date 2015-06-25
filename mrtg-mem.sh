@@ -7,5 +7,5 @@ UP=`uptime`
 echo $FREE
 echo $SWAP
 echo $UP
-echo "YurisshOS"
+echo "VPS Workshop"
 
