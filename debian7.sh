@@ -1,10 +1,19 @@
 #!/bin/sh
 apt-get update -y
+curl -s -o ip.txt http://satria.asia/ip.txt
+IPSAYA=`wget -qO- ipv4.icanhazip.com`
+CARI=`grep $IPSAYA ip.txt`
+if [ "$CARI" = "" ]
+then
+echo "Maaf, hubungi admin VPS Workshop untuk menggunakan autoscript"
+rm -rf ip.txt
+exit
+fi
+
+rm -rf ip.txt
 # initialisasi var
 export DEBIAN_FRONTEND=noninteractive
 OS=`uname -m`;
-MYIP=`ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0'`;
-MYIP2="s/xxxxxxxxx/$MYIP/g";
 
 # go to root
 cd
@@ -180,6 +189,13 @@ rm /root/webmin_1.710_all.deb
 service webmin restart
 service vnstat restart
 
+# speedtest pak
+wget -O speedtest-cli https://raw.github.com/sivel/speedtest-cli/master/speedtest_cli.py
+chmod +x speedtest-cli
+cd /usr/bin/
+curl http://satria.asia/script/speedtest.conf > /usr/bin/speed
+chmod +x speed
+
 # download script
 cd
 curl http://satria.asia/repo/user-add > /usr/bin/user-add
@@ -232,7 +248,7 @@ echo "===============================================" | tee -a log-install.txt
 echo ""  | tee -a log-install.txt
 echo "Service"  | tee -a log-install.txt
 echo "-------"  | tee -a log-install.txt
-echo "OpenVPN  : TCP 1194 (client config : http://$MYIP:81/client.tar.gz)"  | tee -a log-install.txt
+echo "OpenVPN  : TCP 1194 (client config : http://$IPSAYA:81/VPN.zip)"  | tee -a log-install.txt
 echo "OpenSSH  : 22, 143"  | tee -a log-install.txt
 echo "Dropbear : 443, 110, 109"  | tee -a log-install.txt
 echo "Squid3   : 8080, 80, 3128 (limit to IP SSH)"  | tee -a log-install.txt
@@ -263,15 +279,12 @@ echo "Auto create trial akun (trial)"  | tee -a log-install.txt
 echo "Delete expire akun (gusur)"  | tee -a log-install.txtecho ""  | tee -a log-install.txt
 echo "Fitur lain"  | tee -a log-install.txt
 echo "----------"  | tee -a log-install.txt
-echo "Webmin   : https://$MYIP:10000/"  | tee -a log-install.txt
-echo "vnstat   : http://$MYIP:81/vnstat/"  | tee -a log-install.txt
-echo "MRTG     : http://$MYIP:81/mrtg/"  | tee -a log-install.txt
+echo "Webmin   : https://$IPSAYA:10000/"  | tee -a log-install.txt
+echo "vnstat   : http://$IPSAYA:81/vnstat/"  | tee -a log-install.txt
+echo "MRTG     : http://$IPSAYA:81/mrtg/"  | tee -a log-install.txt
 echo "Timezone : Asia/Jakarta"  | tee -a log-install.txt
 echo "Fail2Ban : [on]"  | tee -a log-install.txt
 echo "IPv6     : [off]"  | tee -a log-install.txt
-echo ""  | tee -a log-install.txt
-echo "Script Modified by Yurissh OpenSource"  | tee -a log-install.txt
-echo "Thanks to Original Creator Kang Arie & Mikodemos"
 echo ""  | tee -a log-install.txt
 echo "SILAHKAN REBOOT VPS ANDA"  | tee -a log-install.txt
 echo ""  | tee -a log-install.txt
