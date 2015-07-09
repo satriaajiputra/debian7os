@@ -198,13 +198,18 @@ chmod +x speed
 
 # download script
 cd
+if [ $(ifconfig | cut -c 1-8 | sort | uniq -u | grep venet0 | grep -v venet0:) = "venet0" ];then
+curl http://script.satria.asia/debian7ovz/user-add > /usr/bin/user-add
+curl http://script.satria.asia/debian7ovz/trial > /usr/bin/trial
+else
 curl http://satria.asia/repo/user-add > /usr/bin/user-add
+curl http://satria.asia/repo/trial > /usr/bin/trial
+fi
 curl http://satria.asia/repo/user-list > /usr/bin/user-list
 curl http://satria.asia/repo/monitorport > /usr/bin/monitorport
 curl http://satria.asia/repo/dropmon > /usr/bin/dropmon
 curl http://satria.asia/repo/user-login > /usr/bin/user-login
 curl http://satria.asia/repo/renew > /usr/bin/renew
-curl http://satria.asia/repo/trial > /usr/bin/trial
 curl http://satria.asia/repo/minggat > /usr/bin/minggat
 curl http://satria.asia/repo/gusur > /usr/bin/gusur
 curl http://satria.asia/repo/menu > /usr/bin/menu
