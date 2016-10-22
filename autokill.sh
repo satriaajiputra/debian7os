@@ -10,6 +10,6 @@
   #done
 while :
   do
-  ./userexpired.sh
+  ./user-expire
   sleep 36000
   done
