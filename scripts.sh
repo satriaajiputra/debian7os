@@ -9,7 +9,7 @@ fi
 export DEBIAN_FRONTEND=noninteractive
 OS=`uname -m`;
 MYIP=$(wget -qO- ipv4.icanhazip.com);
-MYIP2="s/xxxxxxxxx/$MYIP/g";
+MYIP2="s/xxxxxxxxx-xxxxxxxxx/$MYIP/g";
 ether=`ifconfig | cut -c 1-8 | sort | uniq -u | grep venet0 | grep -v venet0:`
 if [ "$ether" = "" ]; then
         ether=eth0
@@ -116,7 +116,7 @@ apt-get -y install fail2ban;service fail2ban restart;
 # install squid3
 apt-get -y install squid3
 wget -O /etc/squid3/squid.conf "http://anekascript.anekavps.us:81/Debian7/squid3.conf"
-sed -i 's/xxxxxxxxx-xxxxxxxxx/$MYIP2/g' /etc/squid3/squid.conf;
+sed -i $MYIP2 /etc/squid3/squid.conf;
 service squid3 restart
 
 cd
